@@ -64,12 +64,14 @@
             background-color: #fff9a6;
             border-radius: 50%;
             border: 4px dashed #ff5964;
+            overflow: hidden;
             transition: transform 0.3s ease;
         }
 
-        .animal-display svg {
-            width: 140px;
-            height: 140px;
+        .animal-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* Interactive Buttons */
@@ -169,11 +171,11 @@
 
     <main class="game-card">
         <div class="animal-display" id="animalContainer">
-            <!-- Cartoon Animal Vector Graphics rendering here -->
+            <!-- External Cartoon Image renders here -->
         </div>
 
         <div class="options-grid" id="optionsGrid">
-            <!-- Choice buttons will generate dynamically -->
+            <!-- Choice buttons generate dynamically -->
         </div>
 
         <div class="feedback-message" id="feedback"></div>
@@ -181,87 +183,48 @@
     </main>
 
     <script>
-        // Cartoon SVG Animals database
+        // Database using external web image URLs
         const animals = [
             {
                 name: "Dog",
-                svg: `<svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="55" r="30" fill="#d4a373"/>
-                    <circle cx="35" cy="50" r="4" fill="#000"/>
-                    <circle cx="65" cy="50" r="4" fill="#000"/>
-                    <ellipse cx="50" cy="60" rx="6" ry="4" fill="#000"/>
-                    <ellipse cx="22" cy="40" rx="8" ry="18" fill="#a5a58d" transform="rotate(15 22 40)"/>
-                    <ellipse cx="78" cy="40" rx="8" ry="18" fill="#a5a58d" transform="rotate(-15 78 40)"/>
-                    <path d="M 46 66 Q 50 72 54 66" stroke="#000" stroke-width="2" fill="none"/>
-                </svg>`
+                imageUrl: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=400&q=80"
             },
             {
                 name: "Cat",
-                svg: `<svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="55" r="30" fill="#ffb703"/>
-                    <polygon points="25,35 35,15 45,30" fill="#ffb703"/>
-                    <polygon points="75,35 65,15 55,30" fill="#ffb703"/>
-                    <circle cx="38" cy="50" r="4" fill="#000"/>
-                    <circle cx="62" cy="50" r="4" fill="#000"/>
-                    <polygon points="50,58 46,54 54,54" fill="#ff4d6d"/>
-                    <line x1="20" y1="55" x2="32" y2="55" stroke="#000" stroke-width="2"/>
-                    <line x1="80" y1="55" x2="68" y2="55" stroke="#000" stroke-width="2"/>
-                </svg>`
+                imageUrl: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80"
             },
             {
                 name: "Panda",
-                svg: `<svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="55" r="32" fill="#ffffff" stroke="#000" stroke-width="3"/>
-                    <circle cx="25" cy="30" r="12" fill="#000"/>
-                    <circle cx="75" cy="30" r="12" fill="#000"/>
-                    <ellipse cx="38" cy="50" rx="7" ry="9" fill="#000"/>
-                    <ellipse cx="62" cy="50" rx="7" ry="9" fill="#000"/>
-                    <circle cx="38" cy="48" r="2" fill="#fff"/>
-                    <circle cx="62" cy="48" r="2" fill="#fff"/>
-                    <ellipse cx="50" cy="62" rx="5" ry="3" fill="#000"/>
-                </svg>`
+                imageUrl: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef9?auto=format&fit=crop&w=400&q=80"
             },
             {
                 name: "Frog",
-                svg: `<svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="60" r="28" fill="#52b788"/>
-                    <circle cx="35" cy="35" r="12" fill="#52b788"/>
-                    <circle cx="65" cy="35" r="12" fill="#52b788"/>
-                    <circle cx="35" cy="35" r="5" fill="#fff"/>
-                    <circle cx="65" cy="35" r="5" fill="#fff"/>
-                    <circle cx="35" cy="35" r="2" fill="#000"/>
-                    <circle cx="65" cy="35" r="2" fill="#000"/>
-                    <path d="M 38 65 Q 50 75 62 65" stroke="#000" stroke-width="3" fill="none"/>
-                    <circle cx="30" cy="58" r="4" fill="#ff70a6" opacity="0.6"/>
-                    <circle cx="70" cy="58" r="4" fill="#ff70a6" opacity="0.6"/>
-                </svg>`
+                imageUrl: "https://images.unsplash.com/photo-1559253664-ca249d4608c6?auto=format&fit=crop&w=400&q=80"
             },
             {
                 name: "Bear",
-                svg: `<svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="55" r="30" fill="#9c6644"/>
-                    <circle cx="28" cy="30" r="10" fill="#9c6644"/>
-                    <circle cx="72" cy="30" r="10" fill="#9c6644"/>
-                    <circle cx="28" cy="30" r="5" fill="#ddb892"/>
-                    <circle cx="72" cy="30" r="5" fill="#ddb892"/>
-                    <ellipse cx="50" cy="62" rx="12" ry="9" fill="#ddb892"/>
-                    <circle cx="38" cy="48" r="3" fill="#000"/>
-                    <circle cx="62" cy="48" r="3" fill="#000"/>
-                    <ellipse cx="50" cy="59" rx="4" ry="3" fill="#000"/>
-                </svg>`
+                imageUrl: "https://images.unsplash.com/photo-1530595467537-0b5996c41f2d?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                name: "Elephant",
+                imageUrl: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                name: "Lion",
+                imageUrl: "https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?auto=format&fit=crop&w=400&q=80"
             }
         ];
 
         let currentAnimal = null;
         let canClick = true;
 
-        // Built-in Text-to-Speech function for audio feedback
+        // Built-in Text-to-Speech function
         function speak(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Stop previous voice
+                window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.pitch = 1.3; // Make voice sound cheerful/kid-friendly
-                utterance.rate = 0.9;  // Slightly slower for babies
+                utterance.pitch = 1.3;
+                utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
             }
         }
@@ -275,12 +238,12 @@
             const randomIndex = Math.floor(Math.random() * animals.length);
             currentAnimal = animals[randomIndex];
 
-            // Render SVG Picture
+            // Render external image tag
             const container = document.getElementById('animalContainer');
-            container.innerHTML = currentAnimal.svg;
+            container.innerHTML = `<img src="${currentAnimal.imageUrl}" alt="${currentAnimal.name}">`;
             container.classList.remove('bounce');
 
-            // Generate choices (correct choice + 3 random distinct options)
+            // Generate 4 unique choice options
             let choices = [currentAnimal.name];
             while (choices.length < 4) {
                 const randomOption = animals[Math.floor(Math.random() * animals.length)].name;
@@ -289,7 +252,7 @@
                 }
             }
 
-            // Shuffle choice buttons
+            // Shuffle buttons
             choices.sort(() => Math.random() - 0.5);
 
             // Render buttons
@@ -303,7 +266,7 @@
                 optionsGrid.appendChild(btn);
             });
 
-            // Read prompt out loud
+            // Speak prompt
             speak("What animal is this?");
         }
 
@@ -332,7 +295,6 @@
             }
         }
 
-        // Initialize game on startup
         window.onload = loadNewQuestion;
     </script>
 </body>
